@@ -1,0 +1,31 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "E.ON Next Optimise Prices",
+        "description": "Enter your Optimise app login. Prices only; SmartShift and battery controls stay unchanged.",
+        "data": {
+          "username": "Optimise app email",
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect Optimise prices",
+        "description": "Enter the Optimise app login for the same account.",
+        "data": {
+          "username": "Optimise app email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The Optimise app login was rejected or requires additional verification.",
+      "cannot_connect": "Unable to retrieve a valid import and export price feed. Try again later."
+    },
+    "abort": {
+      "already_configured": "This Optimise account is already configured.",
+      "wrong_account": "Use the same Optimise account to reconnect.",
+      "reauth_successful": "Successfully reconnected."
+    }
+  }
+}
