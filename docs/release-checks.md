@@ -22,6 +22,7 @@ Verified on 14 October 2026:
 - The existing isolated test Home Assistant created one device with three entities. Its integration picture displayed correctly. See [demonstration screenshot](device-demo.png).
 - All 12 installed component files matched the candidate byte for byte. The preview transport uses synthetic data and is a separate, private lab fixture; it is not included in the release.
 - No production integration, battery control or SmartShift configuration was changed.
+- Follow-up: the synthetic lab account was replaced with the owner's real login through Home Assistant's normal setup flow. Production HA, test HA and a fresh direct API login agreed on both current prices; all 97 overlapping periods matched in each direction. The test instance uses a private TLS pass-through restricted to the supplier's two hostnames, because its Docker network is isolated. Neither this gateway nor real account data is included in the release. The public screenshot above remains a demonstration screenshot.
 
 The test Home Assistant is separate from the production installation. Another customer's account, interactive MFA and Home Assistant versions other than 2026.10.1 have not been verified.
 
