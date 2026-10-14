@@ -4,7 +4,7 @@
 
 A small, unofficial Home Assistant integration that translates **your own Optimise app price feed** into sensors on one device. Enter your Optimise app email and password; no API key or Predbat installation is needed.
 
-> Release candidate: prepared for review. The proposed public repository and HACS installation link are not live yet.
+> Beta release: tested on Home Assistant 2026.10.1. This is an unofficial community integration.
 
 ## One device, three sensors
 
@@ -37,11 +37,9 @@ Use the credentials you use in the **Optimise app**. These may differ from your 
 
 ## Install with HACS
 
-Once this release has been published:
-
 1. Open **HACS → ⋮ → Custom repositories**.
 2. Add `https://github.com/markgraham924/ha-eon-optimise-prices` with category **Integration**.
-3. Download **E.ON Next Optimise Prices**.
+3. Download **E.ON Next Optimise Prices**. If HACS hides the beta release, enable beta versions in its download dialog and select `v0.1.0b1`.
 4. Restart Home Assistant.
 5. Open **Settings → Devices & services → Add integration** and search for **E.ON Next Optimise Prices**.
 6. Enter your **Optimise app email and password**.

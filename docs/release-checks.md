@@ -1,6 +1,6 @@
 # Release checks — 0.1.0b1
 
-This is a locally prepared beta candidate. Public repository creation, a GitHub release, a HACS catalogue submission and Reddit messages require the owner's review.
+The owner reviewed the candidate and approved public repository and beta-release publication on 14 October 2026. Reddit messages and a HACS default-catalogue submission are not part of that publication approval.
 
 ## Scope
 
@@ -28,17 +28,10 @@ The test Home Assistant is separate from the production installation. Another cu
 
 The fresh-password check uses owner-authorised credentials in memory, against the same production app API. Credentials and actual prices are omitted from the evidence. UI/device screenshots use labelled demonstration data.
 
-The GitHub workflows and HACS repository-access validation remain pending publication approval. Local hassfest has passed; a valid layout does not imply HACS default-catalogue acceptance.
+Local hassfest has passed. GitHub workflow results are available from the repository's Actions tab. A valid custom-repository layout does not imply HACS default-catalogue acceptance.
 
-## Publication after review
+## Distribution
 
-1. Review source, documentation, icon and test evidence.
-2. Create the proposed public GitHub repository `markgraham924/ha-eon-optimise-prices`.
-3. Add a short read-only-price description and topics `home-assistant`, `hacs`, `eon-next`, `optimise`.
-4. Remove the README's unpublished-candidate notice.
-5. Run GitHub validation and resolve any failures before promoting the beta.
-6. Publish tag/release `v0.1.0b1` with the verified release archive.
-7. Verify unauthenticated access to the repository/release and HACS custom-repository installation.
-8. Send the reviewed installation link only after the owner approves the reply.
+Repository: `markgraham924/ha-eon-optimise-prices`. Beta tag: `v0.1.0b1`.
 
-None of those publication steps has been performed by preparing this candidate.
+Use the HACS custom-repository instructions in the README, or copy the component folder from the release ZIP. HACS default-catalogue inclusion has not been requested. Real account data, credentials and private lab infrastructure are excluded from source and release assets.
