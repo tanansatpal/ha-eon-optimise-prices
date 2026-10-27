@@ -5,7 +5,7 @@ import time
 
 import aiohttp
 from botocore.config import Config
-from botocore.exceptions import ClientError
+from botocore.exceptions import BotoCoreError, ClientError
 from pycognito import Cognito
 
 from .const import CLIENT_ID, GRAPHQL_URL, PRICE_QUERY, REGION, USER_POOL_ID
@@ -67,6 +67,9 @@ class OptimiseClient:
                     "UserNotConfirmedException",
                 ):
                     raise AuthenticationError("Optimise login rejected") from None
+                raise PriceFeedError("Optimise login temporarily unavailable") from None
+            except BotoCoreError:
+                # Connection failures and timeouts are outages, not rejected logins.
                 raise PriceFeedError("Optimise login temporarily unavailable") from None
             except Exception:
                 raise AuthenticationError("Optimise login requires user attention") from None

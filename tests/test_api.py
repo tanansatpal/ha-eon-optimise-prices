@@ -5,6 +5,9 @@ import sys
 import types
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from botocore.exceptions import ClientError, EndpointConnectionError, ReadTimeoutError
 
 package = types.ModuleType("optimise_test")
 package.__path__ = [str(Path(__file__).parents[1] / "custom_components/eon_next_optimise")]
@@ -96,3 +99,43 @@ class ApiTests(unittest.IsolatedAsyncioTestCase):
         client = self.client([Response(200, payload)])
         self.assertEqual((await client.fetch(self.executor))["export"][0]["value_inc_vat"], 25)
         self.assertEqual(len(client.session.calls), 1)
+
+
+def cognito_failing_with(error):
+    """A Cognito stand-in whose password sign-in raises the given error."""
+
+    class FailingCognito:
+        def __init__(self, *args, **kwargs):
+            self.id_token = None
+            self.refresh_token = kwargs.get("refresh_token")
+
+        def authenticate(self, password):
+            raise error
+
+    return FailingCognito
+
+
+class AuthenticateTests(unittest.TestCase):
+    """Only a rejected login may ask the user to re-authenticate."""
+
+    def authenticate(self, error):
+        client = api.OptimiseClient(None, "private-email", "private-password")
+        with patch.object(api, "Cognito", cognito_failing_with(error)):
+            client.authenticate()
+
+    def test_network_failures_are_temporary(self):
+        for error in (
+            EndpointConnectionError(endpoint_url="https://cognito.invalid"),
+            ReadTimeoutError(endpoint_url="https://cognito.invalid"),
+        ):
+            with self.subTest(error=type(error).__name__):
+                with self.assertRaises(api.PriceFeedError):
+                    self.authenticate(error)
+
+    def test_rejected_login_needs_attention(self):
+        error = ClientError(
+            {"Error": {"Code": "NotAuthorizedException", "Message": "private"}}, "InitiateAuth"
+        )
+        with self.assertRaises(api.AuthenticationError) as caught:
+            self.authenticate(error)
+        self.assertNotIn("private", str(caught.exception))

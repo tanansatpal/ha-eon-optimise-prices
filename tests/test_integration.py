@@ -77,6 +77,16 @@ async def test_one_device_three_entities_and_no_controls(hass, fetch):
     assert "synthetic-test-only" not in str(states)
 
 
+async def test_rates_schedule_is_not_recorded(hass, fetch):
+    entry = await setup(hass, fetch)
+    registry = er.async_get(hass)
+    for direction in ("import", "export"):
+        entity_id = registry.async_get_entity_id("sensor", DOMAIN, entry.entry_id + "_" + direction)
+        state = hass.states.get(entity_id)
+        assert state.attributes["rates"]
+        assert "rates" in state.state_info["unrecorded_attributes"]
+
+
 async def test_current_price_moves_at_boundary_without_new_api_call(hass, fetch, prices):
     entry = await setup(hass, fetch)
     registry = er.async_get(hass)

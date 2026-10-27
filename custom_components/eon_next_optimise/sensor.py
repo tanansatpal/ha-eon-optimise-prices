@@ -38,6 +38,8 @@ class OptimiseEntity(CoordinatorEntity, SensorEntity):
 class OptimisePriceSensor(OptimiseEntity):
     _attr_native_unit_of_measurement = "p/kWh"
     _attr_icon = "mdi:currency-gbp"
+    # The full schedule is ~16 KB; keep it live but out of recorder history.
+    _unrecorded_attributes = frozenset({"rates"})
 
     def __init__(self, coordinator, direction):
         super().__init__(coordinator, direction)
